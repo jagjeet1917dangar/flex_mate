@@ -1,7 +1,10 @@
-import React from 'react';
-import './ProfilePopup.css'; // Create this CSS file for styling
+import React, { useState } from "react";
+import "./ProfilePopup.css"; 
+import HirePopup from "./HirePopup"; // Import HirePopup Component
 
 const ProfilePopup = ({ profile, onClose }) => {
+  const [isHirePopupOpen, setHirePopupOpen] = useState(false);
+
   if (!profile) return null;
 
   return (
@@ -19,7 +22,12 @@ const ProfilePopup = ({ profile, onClose }) => {
               </div>
             </div>
           </div>
+
+          {/* Skills Section */}
           <div className="profile-skills">
+            <div className="hire-name" onClick={() => setHirePopupOpen(true)}>
+              Hire {profile.name}
+            </div>
             <h3>Skills</h3>
             <div className="skills-list">
               {profile.categories?.map((category, index) => (
@@ -27,6 +35,8 @@ const ProfilePopup = ({ profile, onClose }) => {
               ))}
             </div>
           </div>
+
+          {/* Work Section */}
           <div className="profile-work">
             <h3>Work</h3>
             <div className="work-images">
@@ -37,6 +47,9 @@ const ProfilePopup = ({ profile, onClose }) => {
           </div>
         </div>
       </div>
+
+      {/* HirePopup - Only opens when isHirePopupOpen is true */}
+      {isHirePopupOpen && <HirePopup freelancerName={profile.name} onClose={() => setHirePopupOpen(false)} />}
     </div>
   );
 };
